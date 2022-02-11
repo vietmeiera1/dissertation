@@ -101,9 +101,10 @@ EXP137PPM <- read_csv("AV-137-Ferrozine-PPM-RScript.csv", col_names = TRUE) #loa
 Fe2_G33_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_AV1-W_G#33`)
 #beacuse I am missing values in this column, it will not give me an average
 #will need to remove the "NA" and leave in blank
+#this still doesn't resolve the issue when it's left blank
 
 Fe2_G31_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_AV1-W_G#31`)
-
+#this does give me the average for the PPM
 
 #take the st dev for the replicates
 
