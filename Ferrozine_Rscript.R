@@ -90,28 +90,56 @@ print(graph)
 #Would it be easier to pull the final numbers from excel into a more organized spreadsheet
 #then use that spreadsheet to make these graphs? 
 
-
-
+##load the data into R
 EXP137PPM <- read_csv("AV-137-Ferrozine-PPM-RScript.csv", col_names = TRUE) #load in datafile. Skip 1st 17 rows. Column names listed
 #Latin1 was added, as I was getting an error code later in the doc
 
-#take the mean for the replicates
-
-
+##take the mean for the replicates
 Fe2_G33_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_AV1-W_G#33`)
 #beacuse I am missing values in this column, it will not give me an average
 #will need to remove the "NA" and leave in blank
 #this still doesn't resolve the issue when it's left blank
+Fe2_G33_Day0_Oct_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Oct_AV1-W_G#33`)
+Fe2_G33_Day0_1xSx_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_1xSx_AV1-W_G#33`)
 
 Fe2_G31_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_AV1-W_G#31`)
 #this does give me the average for the PPM
+Fe2_G31_Day0_Oct_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Oct_AV1-W_G#31`)
+Fe2_G31_Day0_1xSx_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_1xSx_AV1-W_G#31`)
 
+Fe2_Sterile_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_Sterile`)
+Fe2_Sterile_Day0_Oct_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Oct_Sterile`)
+Fe2_Sterile_Day0_1xSx_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_1xSx_Sterile`)
 #take the st dev for the replicates
 
-graphPPM <- ggplot(EXP137PPM, aes(x = EXP137$STD_Value, y = EXP137$Absorbancy_562nm)) +  
-  geom_point()+
+Fe2_MMC_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_MMC`)
+Fe2_MMC_Day0_Oct_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Oct_MMC`)
+Fe2_MMC_Day0_1xSx_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_1xSx_MMC`)
+
+## Bar graph for single time point 
+# so I need to take the averages for each condition and make those they y values
+# and need to make the x values the type of condition 
+
+
+# gc_R2A <- gc %>%
+#   rowwise() %>%
+#   mutate(
+#     m.R2A = mean(c(A8,B8,C8,D8,E8,F8,G8,H8)),
+#     sd.R2A = sd(c(A8,B8,C8,D8,E8,F8,G8,H8))
+#   )
+
+graphPPM <- ggplot(EXP137PPM, aes(y = Fe2_G31_Day0_1xSx_Avg)) +  
+  geom_bar()
+
+print(graphPPM)
+
+#this will graph just 1 condition mean, we want to graph all conditions on the
+# same graph as individual bars
   
-  labs(x = "Fe(II) conc. PPM", y = "Absorbancy Fe(II) (OD600)") +
+
+
+
+labs(x = "Fe(II) conc. PPM", y = "Absorbancy Fe(II) (OD600)") +
   
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
   theme(aspect.ratio = 1) +
