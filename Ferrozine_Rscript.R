@@ -59,13 +59,11 @@ EXP137 <- read_csv("AV-137-Ferrozine-RScript.csv", col_names = TRUE) #load in da
 
 
 
-#create standard curve to calculate y=mx+b
+#create standard curve to calculate y=mx+b so we can measure the OD readings at PPM
 
+graph <- ggplot(EXP137, aes(x = EXP137$STD_Value, y = EXP137$Absorbancy_562nm)) +  
+  geom_point()+
 
-
-
-graph <- ggplot(EXP137, aes(x = EXP137$STD_Value)) +  
-  geom_point(aes(y=EXP137$Absorbancy_562nm)) +
   labs(x = "Fe(II) conc. PPM", y = "Absorbancy Fe(II) (OD600)") +
   
   theme(panel.background = element_rect(fill = "white", colour = "black")) +
@@ -79,20 +77,16 @@ graph <- ggplot(EXP137, aes(x = EXP137$STD_Value)) +
   theme(plot.title = element_text(size = 16)) +
   theme(plot.title = element_text(hjust = .5)) +
   theme(axis.text = element_text(face = "plain", size = 12)) + 
-  theme(axis.title = element_text(size = 15))
-
-
+  theme(axis.title = element_text(size = 15)) + 
+  geom_smooth(method = "lm")
 
 print(graph)  
 
 
-# line <- data.frame(x=EXP137$STD_Value, y=EXP137$Absorbancy_562nm)
-# geom_line(data = line)
 
 
-# graphline <- graph + geom_smooth(aes(), method = 'lm')
-
-geom_line(graph)
-
-print(graphline)
+# Tex for subscripts and superscripts
+# $u_{i}$ will give you a subscript
+# $Fe^{2+} will superscript the 2+ together
+# $\mathrm{Fe^{2+}}$ will remove the italices that is automatically formated for Tex 
 
