@@ -83,6 +83,50 @@ graph <- ggplot(EXP137, aes(x = EXP137$STD_Value, y = EXP137$Absorbancy_562nm)) 
 print(graph)  
 
 
+# y = mx+b
+
+# PPM = (OD-b)/m
+
+#Would it be easier to pull the final numbers from excel into a more organized spreadsheet
+#then use that spreadsheet to make these graphs? 
+
+
+
+EXP137PPM <- read_csv("AV-137-Ferrozine-PPM-RScript.csv", col_names = TRUE) #load in datafile. Skip 1st 17 rows. Column names listed
+#Latin1 was added, as I was getting an error code later in the doc
+
+#take the mean for the replicates
+
+
+Fe2_G33_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_AV1-W_G#33`)
+#beacuse I am missing values in this column, it will not give me an average
+#will need to remove the "NA" and leave in blank
+
+Fe2_G31_Day0_Aug_Avg <- mean(EXP137PPM$`Fe2+_PPM_DAY0_S.B1_Aug_AV1-W_G#31`)
+
+
+#take the st dev for the replicates
+
+graphPPM <- ggplot(EXP137PPM, aes(x = EXP137$STD_Value, y = EXP137$Absorbancy_562nm)) +  
+  geom_point()+
+  
+  labs(x = "Fe(II) conc. PPM", y = "Absorbancy Fe(II) (OD600)") +
+  
+  theme(panel.background = element_rect(fill = "white", colour = "black")) +
+  theme(aspect.ratio = 1) +
+  theme(
+    panel.grid.major.x = element_line(color = "grey80", linetype = "dashed"),
+    panel.grid.minor.x = element_line(colour = "grey85", linetype = "dashed"),
+  ) +
+  ggtitle("Fe(II) Conc. (PPM) vs. Absorbancy Fe(II)") +
+  
+  theme(plot.title = element_text(size = 16)) +
+  theme(plot.title = element_text(hjust = .5)) +
+  theme(axis.text = element_text(face = "plain", size = 12)) + 
+  theme(axis.title = element_text(size = 15)) + 
+  geom_smooth(method = "lm")
+
+print(graph)  
 
 
 # Tex for subscripts and superscripts
